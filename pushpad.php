@@ -44,9 +44,6 @@ function pushpad_add_wp_head() {
 
 <?php
 	echo "pushpad('init', '" . $pushpad_settings ["project_id"] . "');";
-	if ( $pushpad_settings ["subscribe_on_load"] ) {
-		echo "pushpad('subscribe');";
-	}
 ?>
 
 	jQuery(function () {
@@ -63,6 +60,13 @@ function pushpad_add_wp_head() {
 			});
 		};
 		pushpad('status', updateButton);
+
+		<?php
+		if ( $pushpad_settings ["subscribe_on_load"] ) {
+			echo "pushpad('subscribe', function () { updateButton(true); });";
+		}
+		?>
+
 		jQuery(".pushpad-button").on("click", function(e) {
 			e.preventDefault();
 			if (jQuery(this).hasClass('subscribed')) {
