@@ -18,3 +18,14 @@
 .pushpad-button-wrapper {
   text-align: center;
 }
+
+pre.pushpad {
+  display: block;
+  background: #fff;
+  border: 1px solid #ccc;
+  padding: 1em;
+}
+
+pre.pushpad code {
+  background: #fff;
+}
