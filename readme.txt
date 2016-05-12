@@ -1,5 +1,5 @@
 === Pushpad Web Push Notifications ===
-Contributors: collimarco
+Contributors: pushpad, collimarco
 Tags: push notifications, web push notifications, web push, push api, push, notifications
 Requires at least: 4.4.0
 Tested up to: 4.4.3
