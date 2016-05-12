@@ -15,9 +15,9 @@ Push notifications re-engage your users by notifying them when you publish somet
 
 Users receive push notifications even when are not surfing your website. They don't need to install any app or plugin.
 
-The **Simple API** is the easiest way to create a channel to send push notifications to your users. It requires **zero setup**, **you don't need any technical skills** and you don't even need to sign up to developer's programs. Just create a project on Pushpad inserting your website name, logo and url and you're done (1 minute).
+**Pushpad Express** is the easiest way to create a channel to send push notifications to your users. It requires **zero setup**, **you don't need any technical skills** and you don't even need to sign up to developer's programs. Just create a project on Pushpad inserting your website name, logo and url and you're done (1 minute).
 
-Go for the **Custom API** if you are looking for a **professional service** which is perfectly integrated into your application and absolutely transparent to the end users. You have more power and control over every detail (for example you can customize the sender).
+Go for **Pushpad Pro** if you are looking for a **professional service** which is perfectly integrated into your application and absolutely transparent to the end users. You have more power and control over every detail (for example you can customize the sender).
 
 This plugin offers the following features:
 
