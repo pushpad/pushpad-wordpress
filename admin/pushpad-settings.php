@@ -3,6 +3,12 @@
  * Function for settings page
  */
 function pushpad_settings() {
+?>
+
+<div class="wrap">
+	<h1>Pushpad Settings</h1>
+
+<?php
 	$default_settings = array(
 		'api' => '',
 		'token' => '',
@@ -23,8 +29,9 @@ function pushpad_settings() {
 		update_option ( 'pushpad_settings', $settings );
 
 		if ($settings ['api'] == 'custom') {
-			if (file_exists ( dirname ( __FILE__ ) . '/../manifest.json' )) {
-				$oldManifestJson = file_get_contents ( dirname ( __FILE__ ) . '/../manifest.json' );
+			// manifest.json
+			if (file_exists ( ABSPATH . 'manifest.json' )) {
+				$oldManifestJson = file_get_contents ( ABSPATH . 'manifest.json' );
 			} else {
 				$oldManifestJson = '{}';
 			}
@@ -34,42 +41,91 @@ function pushpad_settings() {
 			$data ['gcm_sender_id'] = esc_html ( $settings ['gcm_sender_id'] );
 			$data ['gcm_user_visible_only'] = true;
 			$newManifestJson = json_encode ( $data );
-			file_put_contents ( dirname ( __FILE__ ) . '/../manifest.json', $newManifestJson );
-		}
-	}
-	
+
+			if ( is_writable ( ABSPATH . 'manifest.json' ) || !file_exists ( ABSPATH . 'manifest.json' ) && is_writable ( ABSPATH ) ) {
+				file_put_contents ( ABSPATH . 'manifest.json', $newManifestJson );
+			} else {
 ?>
 
-<div class="wrap">
-	<h1>Pushpad Settings</h1>
+				<p>
+					The file manifest.json in the root directory of Wordpress is not writable.
+					Please change its permissions and try again. Otherwise replace its contents manually:
+				</p>
+				<pre class="pushpad"><code><?= esc_html ( $newManifestJson ) ?></code></pre>
+
+<?php
+			}
+
+			// service-worker.js
+			$importScripts = "importScripts('https://pushpad.xyz/service-worker.js');";
+
+			if (file_exists ( ABSPATH . 'service-worker.js' )) {
+				$serviceWorkerContents = file_get_contents ( ABSPATH . 'service-worker.js' );
+			} else {
+				$serviceWorkerContents = '';
+			}
+
+			$newServiceWorkerContents = $importScripts . "\n\n" . $serviceWorkerContents;
+
+			if ( strpos( $serviceWorkerContents, $importScripts ) === false ) {
+				if ( is_writable ( ABSPATH . 'service-worker.js' ) || !file_exists ( ABSPATH . 'service-worker.js' ) && is_writable ( ABSPATH ) ) {
+					file_put_contents( ABSPATH . 'service-worker.js', $newServiceWorkerContents );
+				} else {
+?>
+
+					<p>
+						The file service-worker.js in the root directory of Wordpress is not writable.
+						Please change its permissions and try again. Otherwise replace its contents manually:
+					</p>
+					<pre class="pushpad"><code><?= esc_html ( $newServiceWorkerContents ) ?></code></pre>
+					<p>
+						Also make sure that the file is accessible at https://example.com/service-worker.js
+						(for example https://example.com/wordpress/service-worker.js is invalid).
+					</p>
+
+<?php
+				}
+			}
+		}
+	}
+?>
 
 	<form method="POST" id="pushpad-settings-form">
 
 		<table class="form-table">
 			<tbody>
 				<tr>
-					<th>Which API are you using?</th>
+					<th>Which product are you using?</th>
 					<td>
 						<label> 
 							<input type="radio" name="api" value="simple" <?php if ($settings['api'] == "simple" ) echo "checked"; ?>> Simple API
 						</label>
 						<br>
 						<label> 
-							<input type="radio" name="api" value="custom" <?php if ($settings['api'] == "custom" ) echo "checked"; ?>> Custom API
+							<input type="radio" name="api" value="custom" <?php if ($settings['api'] == "custom" ) echo "checked"; ?>> Custom API (requires HTTPS)
 						</label>
 					</td>
 				</tr>
 				<tr>
 					<th><label for="token">Pushpad Auth Token</label></th>
-					<td><input type="text" name="token" id="token" value="<?php echo $settings['token'] ?>"></td>
+					<td>
+						<input type="text" name="token" id="token" value="<?php echo $settings['token'] ?>">
+						<p class="description">You can generate it in your <a href="https://pushpad.xyz/users/edit">account settings</a>.</p>
+					</td>
 				</tr>
 				<tr>
 					<th><label for="project_id">Pushpad Project ID</label></th>
-					<td><input type="text" name="project_id" id="project_id" value="<?php echo $settings['project_id'] ?>"></td>
+					<td>
+						<input type="text" name="project_id" id="project_id" value="<?php echo $settings['project_id'] ?>">
+						<p class="description">You can find it in the project settings on Pushpad.</p>
+					</td>
 				</tr>
 				<tr class="custom-api-only">
 					<th><label for="gcm_sender_id">GCM Sender ID</label></th>
-					<td><input type="text" name="gcm_sender_id" id="gcm_sender_id" value="<?php echo $settings['gcm_sender_id'] ?>"></td>
+					<td>
+						<input type="text" name="gcm_sender_id" id="gcm_sender_id" value="<?php echo $settings['gcm_sender_id'] ?>">
+						<p class="description">Read the <a href="https://pushpad.xyz/docs/custom_api_requirements">Requirements</a> section in the docs.</p>
+					</td>
 				</tr>
 				<tr class="custom-api-only">
 					<th>Subscription</th>

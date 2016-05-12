@@ -36,7 +36,7 @@ add_action ( 'admin_menu', 'pushpad_admin_pages' );
 function pushpad_add_wp_head() {
 	$pushpad_settings = get_option ( 'pushpad_settings', array () );
 	if ( !isset($pushpad_settings ["api"]) || $pushpad_settings ["api"] != 'custom' ) return;
-	echo '<link rel="manifest" href="' . plugins_url ( 'manifest.json', __FILE__ ) . '">';
+	echo '<link rel="manifest" href="' . site_url( 'manifest.json' ) . '">';
 ?>
 
 <script>
@@ -87,7 +87,8 @@ function pushpad_script() {
 }
 add_action ( 'admin_enqueue_scripts', 'pushpad_script' );
 
-function pushpad_frontend_style() {
+function pushpad_style() {
 	wp_enqueue_style ( 'style', plugins_url ( '/css/style.css', __FILE__ ) );
 }
-add_action ( 'wp_enqueue_scripts', 'pushpad_frontend_style' );
+add_action ( 'wp_enqueue_scripts', 'pushpad_style' );
+add_action ( 'admin_enqueue_scripts', 'pushpad_style' );
