@@ -1,0 +1,18 @@
+a.button,
+a.button:hover {
+    color: #fff;
+    background: #D81E00;
+    padding: 10px 20px;
+    display: inline-block;
+    text-decoration: none;
+}
+p.button-container {
+    text-align: center;
+}
+div.button-container {
+    text-align: center;
+    margin: 30px 0;
+}
+p.description {
+    color: #707070;
+}
