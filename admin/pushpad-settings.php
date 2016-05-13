@@ -124,7 +124,7 @@ function pushpad_settings() {
 					<th><label for="gcm_sender_id">GCM Sender ID</label></th>
 					<td>
 						<input type="text" name="gcm_sender_id" id="gcm_sender_id" value="<?php echo $settings['gcm_sender_id'] ?>">
-						<p class="description">Read the <a href="https://pushpad.xyz/docs/custom_api_requirements">Requirements</a> section in the docs.</p>
+						<p class="description">Read the <a href="https://pushpad.xyz/docs/pushpad_pro_requirements">Requirements</a> section in the docs.</p>
 					</td>
 				</tr>
 				<tr class="custom-api-only">
