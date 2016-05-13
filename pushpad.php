@@ -72,7 +72,14 @@ function pushpad_add_wp_head() {
 			if (jQuery(this).hasClass('subscribed')) {
 				pushpad('unsubscribe', function () { updateButton(false); });
 			} else {
-				pushpad('subscribe', function () { updateButton(true); });
+				pushpad('subscribe', function (isSubscribed) { 
+					if (isSubscribed) {
+						updateButton(true);
+					} else {
+						updateButton(false);
+						alert('You have blocked notifications for this website. Please change your browser preferences and try again.');
+					}
+				});
 			}
 		});
 	});
