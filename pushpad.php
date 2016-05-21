@@ -18,8 +18,10 @@ include plugin_dir_path( __FILE__ ) . '/includes/metabox.php';
 require_once plugin_dir_path( __FILE__ ) . '/pushpad/pushpad.php';
 require_once plugin_dir_path( __FILE__ ) . '/pushpad/notification.php';
 
-function pushpad_activate_plugin() {
-	exit ( wp_redirect ( admin_url ( 'admin.php?page=pushpad-admin' ) ) );
+function pushpad_activate_plugin( $plugin ) {
+	if( $plugin == plugin_basename( __FILE__ ) ) {
+		exit ( wp_redirect ( admin_url ( 'admin.php?page=pushpad-admin' ) ) );
+	}
 }
 add_action ( 'activated_plugin', 'pushpad_activate_plugin' );
 
