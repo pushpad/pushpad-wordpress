@@ -34,6 +34,8 @@ First you need to sign up to [Pushpad](https://pushpad.xyz) to use this plugin. 
 
 Then you must add at least one method for collecting subscriptions to push notifications (e.g. add the Pushpad widget to the sidebar, so that your visitors can subscribe to notifications). Finally when you publish a post you can send notifications to the subscribers.
 
+N.B. Make sure that you have the PHP cURL extension enabled, otherwise you might experience a blank screen when you try to publish a post. For example on Ubuntu run "sudo apt-get install php5-curl" and enable the extension in php.ini.
+
 If you want to use custom solutions (different from those offered by the plugin) to subscribe your visitors to push notifications you can also read the [docs](https://pushpad.xyz/docs/wordpress) on Pushpad and do a manual installation. Then you can still use the plugin to send push notifications.
 
 We also offer a great [support](https://pushpad.xyz/contact) if you need help.
