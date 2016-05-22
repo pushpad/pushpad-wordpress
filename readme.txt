@@ -2,7 +2,7 @@
 Contributors: pushpad, collimarco
 Tags: push notifications, web push notifications, web push, push api, push, notifications
 Requires at least: 4.4.0
-Tested up to: 4.4.3
+Tested up to: 4.5.2
 Stable tag: 1.0
 
 Real push notifications for your website. Uses the W3C Push API for Chrome and Firefox and supports Safari.
@@ -28,9 +28,11 @@ This plugin offers the following features:
 
 First you need to sign up to [Pushpad](https://pushpad.xyz) to use this plugin. Don't worry: sign up is free and we offer a large free tier.
 
-1. Upload the plugin files to the `/wp-content/plugins/pushpad` directory, or install the plugin through the WordPress plugins screen directly.
+1. Upload the plugin files to the `/wp-content/plugins/pushpad-web-push-notifications` directory, or install the plugin through the WordPress plugins screen directly.
 2. Activate the plugin through the 'Plugins' screen in WordPress
 3. Use the Pushpad->Settings screen to configure the plugin
+
+Then you must add at least one method for collecting subscriptions to push notifications (e.g. add the Pushpad widget to the sidebar, so that your visitors can subscribe to notifications). Finally when you publish a post you can send notifications to the subscribers.
 
 If you want to use custom solutions (different from those offered by the plugin) to subscribe your visitors to push notifications you can also read the [docs](https://pushpad.xyz/docs/wordpress) on Pushpad and do a manual installation. Then you can still use the plugin to send push notifications.
 
