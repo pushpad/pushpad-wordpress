@@ -20,7 +20,7 @@ function pushpad_metabox() {
  * Function to add meta box
  */
 function create_pushpad_metabox() {
-	add_meta_box ( 'pushpad-metabox', 'Pushpad Metabox', 'pushpad_metabox', "post", "side", "high" );
+	add_meta_box ( 'pushpad-metabox', 'Pushpad', 'pushpad_metabox', "post", "side", "high" );
 }
 add_action ( 'add_meta_boxes', 'create_pushpad_metabox' );
 
@@ -75,8 +75,13 @@ function autosend_notification( $post_id, $post ) {
 
 	try {
 		$notification->broadcast ();
+		add_filter('redirect_post_location', function( $location ) {
+			return add_query_arg( 'pushpad-notice', 'delivery-ok', $location );
+		});
 	} catch (Exception $e) {
-		echo 'Pushpad Exception: ',  $e->getMessage(), "\n";
+		add_filter('redirect_post_location', function( $location ) {
+			return add_query_arg( 'pushpad-notice', 'delivery-error', $location );
+		});
 	}
 }
 
