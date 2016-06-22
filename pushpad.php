@@ -103,15 +103,17 @@ add_action ( 'wp_enqueue_scripts', 'pushpad_style' );
 add_action ( 'admin_enqueue_scripts', 'pushpad_style' );
 
 function pushpad_notices() {
-	if ( array_key_exists( 'pushpad-notice', $_GET) ) {
-		switch($_GET['pushpad-notice']) {
-	    case 'delivery-ok':
-	    	echo '<div class="notice notice-success is-dismissible"><p>The push notification has been successfully sent.</p></div>';
+	$delivery_result = get_option ( 'pushpad_delivery_result', null );
+	if ( $delivery_result ) {
+		switch ( $delivery_result['status'] ) {
+	    case 'ok':
+	    	echo '<div class="notice notice-success is-dismissible"><p>The push notifications for the latest post have been successfully sent.</p></div>';
 	      break;
-	    case 'delivery-error':
-	      echo '<div class="error"><p>An error occurred while sending the push notification. Please fix your Pushpad settings.</p></div>';
+	    case 'error':
+	      echo '<div class="error is-dismissible"><p>An error occurred while sending the push notifications for the latest post. Please check your Pushpad settings, make sure that you have the cURL extension enabled and that firewall is not blocking outgoing connections to pushpad.xyz.<br>' . $delivery_result['message'] . '</p></div>';
 	      break;
 	  }
 	}
+  update_option ( 'pushpad_delivery_result', null );
 }
 add_action( 'admin_notices', 'pushpad_notices' );
