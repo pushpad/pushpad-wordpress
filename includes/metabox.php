@@ -47,8 +47,8 @@ function pushpad_send_notification( $post_id ) {
   if ( !$pushpad_settings || empty( $pushpad_settings ['token'] ) || empty ( $pushpad_settings ['project_id'] ) )
   	return;
 
-  $notification_title = get_bloginfo ( 'name' );
-  $notification_body = get_the_title ( $post_id );
+  $notification_title = html_entity_decode ( get_bloginfo ( 'name' ) );
+  $notification_body = html_entity_decode ( get_the_title ( $post_id ) );
   $notification_url = get_permalink ( $post_id );
 
   $project_id = $notification_settings ['project_id'];
