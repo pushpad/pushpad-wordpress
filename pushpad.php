@@ -3,7 +3,7 @@
  * Plugin Name: Pushpad - Web Push Notifications
  * Plugin URI: https://pushpad.xyz/docs/wordpress
  * Description: Real push notifications for your website. Uses the W3C Push API for Chrome and Firefox and supports Safari.
- * Version: 1.0.5
+ * Version: 1.0.6
  * Author: Pushpad
  * Author URI: https://pushpad.xyz
  * Text Domain: pushpad
@@ -45,7 +45,7 @@ function pushpad_add_wp_head() {
 	(function(p,u,s,h,x){p.pushpad=p.pushpad||function(){(p.pushpad.q=p.pushpad.q||[]).push(arguments)};h=u.getElementsByTagName('head')[0];x=u.createElement('script');x.async=1;x.src=s;h.appendChild(x);})(window,document,'https://pushpad.xyz/pushpad.js');
 
 <?php
-	echo "pushpad('init', '" . $pushpad_settings ["project_id"] . "');";
+	echo "pushpad('init', '" . esc_js ( $pushpad_settings ["project_id"] ) . "');";
 ?>
 
 	jQuery(function () {
@@ -110,7 +110,7 @@ function pushpad_notices() {
 	    	echo '<div class="notice notice-success is-dismissible"><p>The push notifications for the latest post have been successfully sent.</p></div>';
 	      break;
 	    case 'error':
-	      echo '<div class="error is-dismissible"><p>An error occurred while sending the push notifications for the latest post. Please check your Pushpad settings, make sure that you have the cURL extension enabled and that firewall is not blocking outgoing connections to pushpad.xyz.<br>' . $delivery_result['message'] . '</p></div>';
+	      echo '<div class="error is-dismissible"><p>An error occurred while sending the push notifications for the latest post. Please check your Pushpad settings, make sure that you have the cURL extension enabled and that firewall is not blocking outgoing connections to pushpad.xyz.<br>' . esc_html ( $delivery_result['message'] ) . '</p></div>';
 	      break;
 	  }
 	}

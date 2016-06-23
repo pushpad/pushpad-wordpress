@@ -20,10 +20,10 @@ function pushpad_settings() {
 	$settings = wp_parse_args( $settings, $default_settings );
 
 	if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-		$settings ['api'] = isset ( $_POST ['api'] ) ? esc_html ( $_POST ['api'] ) : '';	
-		$settings ['token'] = isset ( $_POST ['token'] ) ? esc_html ( $_POST ['token'] ) : '';
-		$settings ['project_id'] = isset ( $_POST ['project_id'] ) ? esc_html ( $_POST ['project_id'] ) : '';
-		$settings ['gcm_sender_id'] = isset ( $_POST ['gcm_sender_id'] ) ? esc_html ( $_POST ['gcm_sender_id'] ) : '';
+		$settings ['api'] = isset ( $_POST ['api'] ) ? $_POST ['api'] : '';	
+		$settings ['token'] = isset ( $_POST ['token'] ) ? $_POST ['token'] : '';
+		$settings ['project_id'] = isset ( $_POST ['project_id'] ) ? $_POST ['project_id'] : '';
+		$settings ['gcm_sender_id'] = isset ( $_POST ['gcm_sender_id'] ) ? $_POST ['gcm_sender_id'] : '';
 		$settings ['subscribe_on_load'] = isset ( $_POST ['subscribe_on_load'] );
 		
 		update_option ( 'pushpad_settings', $settings );
@@ -38,7 +38,7 @@ function pushpad_settings() {
 
 			$data = json_decode ( $oldManifestJson, true );
 			
-			$data ['gcm_sender_id'] = esc_html ( $settings ['gcm_sender_id'] );
+			$data ['gcm_sender_id'] = $settings ['gcm_sender_id'];
 			$data ['gcm_user_visible_only'] = true;
 			$newManifestJson = json_encode ( $data );
 
@@ -109,21 +109,21 @@ function pushpad_settings() {
 				<tr>
 					<th><label for="token">Pushpad Auth Token</label></th>
 					<td>
-						<input type="text" name="token" id="token" value="<?php echo $settings['token'] ?>">
+						<input type="text" name="token" id="token" value="<?php echo esc_attr ( $settings['token'] ) ?>">
 						<p class="description">You can generate it in your <a href="https://pushpad.xyz/users/edit">account settings</a>.</p>
 					</td>
 				</tr>
 				<tr>
 					<th><label for="project_id">Pushpad Project ID</label></th>
 					<td>
-						<input type="text" name="project_id" id="project_id" value="<?php echo $settings['project_id'] ?>">
+						<input type="text" name="project_id" id="project_id" value="<?php echo esc_attr ( $settings['project_id'] ) ?>">
 						<p class="description">You can find it in the project settings on Pushpad.</p>
 					</td>
 				</tr>
 				<tr class="custom-api-only">
 					<th><label for="gcm_sender_id">GCM Sender ID</label></th>
 					<td>
-						<input type="text" name="gcm_sender_id" id="gcm_sender_id" value="<?php echo $settings['gcm_sender_id'] ?>">
+						<input type="text" name="gcm_sender_id" id="gcm_sender_id" value="<?php echo esc_attr ( $settings['gcm_sender_id'] ) ?>">
 						<p class="description">Read the <a href="https://pushpad.xyz/docs/pushpad_pro_requirements">Requirements</a> section in the docs.</p>
 					</td>
 				</tr>

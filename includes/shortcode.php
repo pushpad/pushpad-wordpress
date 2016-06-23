@@ -16,9 +16,9 @@ function pushpad_shortcode($atts) {
 	}
 
 	if ($pushpad_settings ['api'] == 'simple') {
-		return '<a class="pushpad-button" href="https://pushpad.xyz/projects/' .  $pushpad_settings ['project_id'] . '/subscription/edit">' . $atts ['subscribe'] . '</a>';
+		return '<a class="pushpad-button" href="https://pushpad.xyz/projects/' .  esc_html ( $pushpad_settings ['project_id'] ) . '/subscription/edit">' . esc_html ( $atts ['subscribe'] ) . '</a>';
 	} else {
-		return '<button class="pushpad-button" data-subscribe-text="' . $atts ['subscribe'] . '" data-unsubscribe-text="' . $atts ['unsubscribe'] . '">' . $atts ['subscribe'] . '</button>';
+		return '<button class="pushpad-button" data-subscribe-text="' . esc_html ( $atts ['subscribe'] ) . '" data-unsubscribe-text="' . esc_html ( $atts ['unsubscribe'] ) . '">' . esc_html ( $atts ['subscribe'] ) . '</button>';
 	}
 }
 
