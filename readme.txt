@@ -24,6 +24,8 @@ This plugin offers the following features:
 - **Send push notifications** directly from Wordpress when you publish something new
 - **Collect subscriptions** to push notifications
 
+**Pull requests** are welcome and for convenience there is also a [repository on Github](https://github.com/pushpad/pushpad-wordpress).
+
 == Installation ==
 
 First you need to sign up to [Pushpad](https://pushpad.xyz) to use this plugin. Don't worry: sign up is free and we offer a large free tier.
