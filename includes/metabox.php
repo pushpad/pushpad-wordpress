@@ -29,6 +29,9 @@ add_action ( 'add_meta_boxes', 'create_pushpad_metabox' );
  * Send the notification for a post if checkbox is checked
  */
 function pushpad_save_post( $post_id, $post ) {
+  if( 'inline-save' == $_POST['action'] )
+    return;
+
 	if ( ! current_user_can ( "edit_post", $post_id ) )
 		return;
 
@@ -37,6 +40,9 @@ function pushpad_save_post( $post_id, $post ) {
 add_action ( 'save_post', 'pushpad_save_post', 10, 2 );
 
 function pushpad_send_notification( $post_id ) {
+  if( 'inline-save' == $_POST['action'] )
+    return;
+
 	$should_send = isset ( $_POST ['pushpad_metabox_form_data_available'] ) ? isset ( $_POST ['pushpad_send_notification'] ) : get_post_meta( $post_id, 'pushpad_send_notification', true );
 
   if ( ! $should_send )
