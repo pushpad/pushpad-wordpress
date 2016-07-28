@@ -35,7 +35,9 @@ function pushpad_save_post( $post_id, $post ) {
 	if ( ! current_user_can ( "edit_post", $post_id ) )
 		return;
 
-	update_post_meta ( $post_id, 'pushpad_send_notification', isset ( $_POST ['pushpad_send_notification'] ) );
+  $should_send = get_post_status ( $post_id ) != 'publish' ? isset ( $_POST ['pushpad_send_notification'] ) : false;
+
+  update_post_meta ( $post_id, 'pushpad_send_notification', $should_send );
 }
 add_action ( 'save_post', 'pushpad_save_post', 10, 2 );
 
@@ -57,9 +59,6 @@ function pushpad_send_notification( $post_id ) {
   $notification_body = html_entity_decode ( get_the_title ( $post_id ) );
   $notification_url = get_permalink ( $post_id );
 
-  $project_id = $notification_settings ['project_id'];
-  $token = $notification_settings ['token'];
-
   if ( strlen( $notification_title ) > 30 ) {
   	$notification_title = substr( $notification_title, 0, 27 ) . '...';
   }
@@ -80,6 +79,7 @@ function pushpad_send_notification( $post_id ) {
   try {
   	$notification->broadcast ();
   	update_option ( 'pushpad_delivery_result', array( 'status' => 'ok' ) );
+    delete_post_meta( $post_id, 'pushpad_send_notification' );
   } catch (Exception $e) {
   	update_option ( 'pushpad_delivery_result', array( 'status' => 'error', 'message' => $e->getMessage() ) );
   }
