@@ -3,7 +3,7 @@
  * Plugin Name: Pushpad - Web Push Notifications
  * Plugin URI: https://pushpad.xyz/docs/wordpress
  * Description: Real push notifications for your website. Uses the W3C Push API for Chrome and Firefox and supports Safari.
- * Version: 1.0.7
+ * Version: 1.1.0
  * Author: Pushpad
  * Author URI: https://pushpad.xyz
  * Text Domain: pushpad
