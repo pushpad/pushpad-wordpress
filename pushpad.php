@@ -38,7 +38,6 @@ add_action ( 'admin_menu', 'pushpad_admin_pages' );
 function pushpad_add_wp_head() {
 	$pushpad_settings = get_option ( 'pushpad_settings', array () );
 	if ( !isset($pushpad_settings ["api"]) || $pushpad_settings ["api"] != 'custom' ) return;
-	echo '<link rel="manifest" href="' . site_url( 'manifest.json' ) . '">';
 ?>
 
 <script>
