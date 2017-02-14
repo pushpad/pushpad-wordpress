@@ -98,7 +98,15 @@ function pushpad_settings() {
 						<label for="subscribe_on_load">Prompt users on page load</label>
 					</td>
 				</tr>
-
+				<tr>
+					<th><label>Style</label></th>
+					<td>
+						<p class="description">
+							You can style the Pushpad button by adding your CSS rules for <code>.pushpad-button</code><span class="custom-api-only"> or <code>.pushpad-button.subscribed</code></span>.<br>
+							Go to <i>Appearance -> Customize -> Additional CSS</i>.
+						</p>
+					</td>
+				</tr>
 			</tbody>
 		</table>
 
