@@ -25,6 +25,8 @@ function pushpad_settings() {
 		
 		update_option ( 'pushpad_settings', $settings );
 
+		echo '<div class="notice notice-success is-dismissible"><p>Settings successfully updated.</p></div>';
+
 		if ($settings ['api'] == 'custom') {
 			// service-worker.js
 			$importScripts = "importScripts('https://pushpad.xyz/service-worker.js');";
