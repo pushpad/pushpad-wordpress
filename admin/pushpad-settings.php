@@ -103,12 +103,13 @@ function pushpad_settings() {
 					<th><label>Style</label></th>
 					<td>
 						<p class="description">
-							You can style the Pushpad button by adding your CSS rules for <code>.pushpad-button</code><span class="custom-api-only"> or <code>.pushpad-button.subscribed</code></span>.<br>
+							You can style the Pushpad button by adding your CSS rules for <code>.pushpad-button</code><span class="custom-api-only"> and <code>.pushpad-button.subscribed</code></span>.<br>
+							You can style the Pushpad notices by adding your CSS rules for <code>.pushpad-notice</code> and <code>.pushpad-alert</code></span>.<br>
 							Go to <i>Appearance -> Customize -> Additional CSS</i>.
 						</p>
 					</td>
 				</tr>
-				<tr class="simple-api-only">
+				<tr>
 					<th><label for="token">Custom text</label></th>
 					<td>
 						<input type="text" class="regular-text" name="subscribed_notice" id="subscribed_notice" value="<?php echo esc_attr ( $settings['subscribed_notice'] ) ?>" required>

@@ -3,7 +3,7 @@
  * Plugin Name: Pushpad - Web Push Notifications
  * Plugin URI: https://pushpad.xyz/docs/wordpress
  * Description: Real push notifications for your website. Uses the W3C Push API for Chrome and Firefox and supports Safari.
- * Version: 1.5.0
+ * Version: 1.6.0
  * Author: Pushpad
  * Author URI: https://pushpad.xyz
  * Text Domain: pushpad
@@ -50,7 +50,7 @@ function pushpad_admin_pages() {
 add_action ( 'admin_menu', 'pushpad_admin_pages' );
 
 function pushpad_add_wp_head() {
-	$pushpad_settings = get_option ( 'pushpad_settings', array () );
+	$pushpad_settings = pushpad_get_settings();
 	if ( !isset($pushpad_settings ["api"]) || $pushpad_settings ["api"] != 'custom' ) return;
 ?>
 
@@ -60,6 +60,10 @@ function pushpad_add_wp_head() {
 <?php
 	echo "pushpad('init', '" . esc_js ( $pushpad_settings ["project_id"] ) . "');";
 ?>
+
+	function pushpadShowMessage(notice_or_alert, text) {
+		jQuery('body').append('<div class="pushpad-' + notice_or_alert + '">' + text + ' <a href="#" onclick="javascript:this.parentNode.style.display=\'none\';" class="close">&times;</a></div>');
+	}
 
 	jQuery(function () {
 		var updateButton = function (isSubscribed) {
@@ -90,9 +94,10 @@ function pushpad_add_wp_head() {
 				pushpad('subscribe', function (isSubscribed) { 
 					if (isSubscribed) {
 						updateButton(true);
+						pushpadShowMessage('notice', '<?php echo esc_js( esc_html( $pushpad_settings ["subscribed_notice"] ) ); ?>');
 					} else {
 						updateButton(false);
-						alert('You have blocked notifications for this website. Please change your browser preferences and try again.');
+						pushpadShowMessage('alert', '<?php echo esc_js( esc_html( $pushpad_settings ["not_subscribed_notice"] ) ); ?>');
 					}
 				});
 			}
@@ -100,7 +105,7 @@ function pushpad_add_wp_head() {
 
 		pushpad('unsupported', function() {
 			jQuery('.pushpad-button').on('click', function() {
-				alert('Sorry, your browser does not support web push notifications.');
+				pushpadShowMessage('alert', '<?php echo esc_js( esc_html( $pushpad_settings ["unsupported_notice"] ) ); ?>');
 			});
 		});
 	});
