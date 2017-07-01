@@ -38,7 +38,7 @@ class Pushpad_Widget extends WP_Widget {
 
 		echo '<div class="pushpad-button-wrapper">';
 		if ($pushpad_settings ['api'] == 'simple') {
-			echo '<a class="pushpad-button" href="https://pushpad.xyz/projects/' .  esc_html ( $pushpad_settings ['project_id'] ) . '/subscription/edit">' . esc_html ( $instance ['widget-subscribe-button-text'] ) . '</a>';
+			echo '<a class="pushpad-button" href="https://pushpad.xyz/projects/' .  esc_html ( $pushpad_settings ['project_id'] ) . '/subscription/edit?ui=false">' . esc_html ( $instance ['widget-subscribe-button-text'] ) . '</a>';
 		} else {
 			echo '<button class="pushpad-button" data-subscribe-text="' . esc_html ( $instance ['widget-subscribe-button-text'] ) . '" data-unsubscribe-text="' . esc_html ( $instance ['widget-unsubscribe-button-text'] ) . '">' . esc_html ( $instance ['widget-subscribe-button-text'] ) . '</button>';
 		}

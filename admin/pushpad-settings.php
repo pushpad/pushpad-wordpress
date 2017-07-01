@@ -9,20 +9,19 @@ function pushpad_settings() {
 	<h1>Pushpad Settings</h1>
 
 <?php
-	$default_settings = array(
-		'api' => '',
-		'token' => '',
-		'project_id' => '',
-		'subscribe_on_load' => false
-	);
-	$settings = get_option ( 'pushpad_settings', array() );
-	$settings = wp_parse_args( $settings, $default_settings );
+	$settings = pushpad_get_settings();
 
 	if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 		$settings ['api'] = isset ( $_POST ['api'] ) ? $_POST ['api'] : '';	
 		$settings ['token'] = isset ( $_POST ['token'] ) ? $_POST ['token'] : '';
 		$settings ['project_id'] = isset ( $_POST ['project_id'] ) ? $_POST ['project_id'] : '';
 		$settings ['subscribe_on_load'] = isset ( $_POST ['subscribe_on_load'] );
+		if ( !empty ( $_POST ['subscribed_notice'] ) )
+			$settings ['subscribed_notice'] = $_POST ['subscribed_notice'];
+		if ( !empty ( $_POST ['not_subscribed_notice'] ) )
+			$settings ['not_subscribed_notice'] = $_POST ['not_subscribed_notice'];
+		if ( !empty ( $_POST ['unsupported_notice'] ) )
+			$settings ['unsupported_notice'] = $_POST ['unsupported_notice'];
 		
 		update_option ( 'pushpad_settings', $settings );
 
@@ -105,6 +104,19 @@ function pushpad_settings() {
 							You can style the Pushpad button by adding your CSS rules for <code>.pushpad-button</code><span class="custom-api-only"> or <code>.pushpad-button.subscribed</code></span>.<br>
 							Go to <i>Appearance -> Customize -> Additional CSS</i>.
 						</p>
+					</td>
+				</tr>
+				<tr class="simple-api-only">
+					<th><label for="token">Custom text</label></th>
+					<td>
+						<input type="text" class="regular-text" name="subscribed_notice" id="subscribed_notice" value="<?php echo esc_attr ( $settings['subscribed_notice'] ) ?>" required>
+						<p class="description">A notice that is displayed when a user successfully subscribes to push notifications.</p>
+						<br>
+						<input type="text" class="regular-text" name="not_subscribed_notice" id="not_subscribed_notice" value="<?php echo esc_attr ( $settings['not_subscribed_notice'] ) ?>" required>
+						<p class="description">A notice that is displayed when subscription to push notifications fails because the user blocks them from browser settings.</p>
+						<br>
+						<input type="text" class="regular-text" name="unsupported_notice" id="unsupported_notice" value="<?php echo esc_attr ( $settings['unsupported_notice'] ) ?>" required>
+						<p class="description">A notice that is displayed when the browser does not support push notifications.</p>
 					</td>
 				</tr>
 			</tbody>

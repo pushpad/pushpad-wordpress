@@ -19,6 +19,31 @@
   text-align: center;
 }
 
+.pushpad-notice, .pushpad-alert {
+  z-index: 999999;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  font-size: 1rem;
+  padding: 1rem;
+  color: #fff;
+}
+
+.pushpad-notice {
+  background-color: green;
+} 
+
+.pushpad-alert {
+  background-color: red;
+}
+
+.pushpad-notice .close, .pushpad-alert .close {
+  float: right;
+  color: #fff;
+  text-decoration: none;
+}
+
 pre.pushpad {
   display: block;
   background: #fff;
