@@ -18,7 +18,7 @@ function pushpad_admin() {
   <h3>Shortcode</h3>
   <p>Inside any page or post you can use <code>[pushpad-button]</code> or <code>[pushpad-button subscribe="Subscribe" unsubscribe="Unsubscribe"]</code>.</p>
   <h3>Browser prompt</h3>
-  <p>If you use Pushpad Pro, you can ask your visitors to subscribe to push notifications on page load by enabling an option in <i>Pushpad -> Settings</i>.</p>
+  <p>You can ask your visitors to subscribe to push notifications on page load by enabling an option in <i>Pushpad -> Settings</i>.</p>
 
   <h2>2. Sending push notifications</h2>
   <p>When you create a new post, this plugin displays an option to send a notification to the subscribers.</p>

@@ -15,7 +15,7 @@ Push notifications re-engage your users by notifying them when you publish somet
 
 Users receive push notifications even when are not surfing your website. They don't need to install any app or plugin.
 
-This plugin supports both **Pushpad Pro** and **Pushpad Express** and offers the following features:
+This plugin offers the following features:
 
 - **Send push notifications** directly from Wordpress when you publish something new
 - **Collect subscriptions** to push notifications

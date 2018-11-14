@@ -70,11 +70,11 @@ function pushpad_settings() {
 					<th>Which product are you using?</th>
 					<td>
 						<label> 
-							<input type="radio" name="api" value="simple" <?php if ($settings['api'] == "simple" ) echo "checked"; ?>> Pushpad Express
+							<input type="radio" name="api" value="custom" <?php if ($settings['api'] == "custom" ) echo "checked"; ?>> Pushpad
 						</label>
 						<br>
 						<label> 
-							<input type="radio" name="api" value="custom" <?php if ($settings['api'] == "custom" ) echo "checked"; ?>> Pushpad Pro (requires HTTPS)
+							<input type="radio" name="api" value="simple" <?php if ($settings['api'] == "simple" ) echo "checked"; ?>> Express (deprecated)
 						</label>
 					</td>
 				</tr>
