@@ -2,7 +2,7 @@
 function pushpad_shortcode($atts) {
 	$atts = shortcode_atts ( array (
 			'subscribe' => 'Subscribe',
-			'unsubscribe' => 'Unsubscribe'
+			'unsubscribe' => 'Subscribed'
 	), $atts, 'pushpad-button' );
 	
 	$pushpad_settings = get_option ( 'pushpad_settings' );

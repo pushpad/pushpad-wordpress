@@ -2,8 +2,8 @@
 /*
  * Plugin Name: Pushpad - Web Push Notifications
  * Plugin URI: https://pushpad.xyz/docs/wordpress
- * Description: Real push notifications for your website. Uses the W3C Push API for Chrome and Firefox and supports Safari.
- * Version: 1.6.1
+ * Description: Real push notifications for your website. Uses the W3C Push API for Chrome, Firefox, Opera, Edge and supports Safari.
+ * Version: 1.7.0
  * Author: Pushpad
  * Author URI: https://pushpad.xyz
  * Text Domain: pushpad
@@ -51,72 +51,32 @@ add_action ( 'admin_menu', 'pushpad_admin_pages' );
 
 function pushpad_add_wp_head() {
 	$pushpad_settings = pushpad_get_settings();
+
 	if ( !isset($pushpad_settings ["api"]) || $pushpad_settings ["api"] != 'custom' ) return;
+
+	wp_register_script( 'pushpad-script', plugins_url('/js/pushpad.js', __FILE__), array('jquery'));
+	wp_enqueue_script( 'pushpad-script' );
 ?>
 
 <script>
 	(function(p,u,s,h,x){p.pushpad=p.pushpad||function(){(p.pushpad.q=p.pushpad.q||[]).push(arguments)};h=u.getElementsByTagName('head')[0];x=u.createElement('script');x.async=1;x.src=s;h.appendChild(x);})(window,document,'https://pushpad.xyz/pushpad.js');
 
-<?php
-	echo "pushpad('init', '" . esc_js ( $pushpad_settings ["project_id"] ) . "');";
-?>
-
-	function pushpadShowMessage(notice_or_alert, text) {
-		jQuery('body').append('<div class="pushpad-' + notice_or_alert + '">' + text + ' <a href="#" onclick="javascript:this.parentNode.style.display=\'none\';" class="close">&times;</a></div>');
-	}
-
-	jQuery(function () {
-		var updateButton = function (isSubscribed) {
-			jQuery('button.pushpad-button').each(function () {
-				var btn = jQuery(this);
-				if (isSubscribed) {
-					btn.html(btn.data('unsubscribe-text'));
-					btn.removeClass('unsubscribed').addClass('subscribed');
-				} else {
-					btn.html(btn.data('subscribe-text'));
-					btn.removeClass('subscribed').addClass('unsubscribed');
-				}
-			});
-		};
-		pushpad('status', updateButton);
-
-		<?php
-		if ( $pushpad_settings ["subscribe_on_load"] ) {
-			echo "pushpad('subscribe', function () { updateButton(true); });";
-		}
-		?>
-
-		jQuery(".pushpad-button").on("click", function(e) {
-			e.preventDefault();
-			if (jQuery(this).hasClass('subscribed')) {
-				pushpad('unsubscribe', function () { updateButton(false); });
-			} else {
-				pushpad('subscribe', function (isSubscribed) { 
-					if (isSubscribed) {
-						updateButton(true);
-						pushpadShowMessage('notice', '<?php echo esc_js( esc_html( $pushpad_settings ["subscribed_notice"] ) ); ?>');
-					} else {
-						updateButton(false);
-						pushpadShowMessage('alert', '<?php echo esc_js( esc_html( $pushpad_settings ["not_subscribed_notice"] ) ); ?>');
-					}
-				});
-			}
-		});
-
-		pushpad('unsupported', function() {
-			jQuery('.pushpad-button').on('click', function() {
-				pushpadShowMessage('alert', '<?php echo esc_js( esc_html( $pushpad_settings ["unsupported_notice"] ) ); ?>');
-			});
-		});
-	});
+	var pushpadSettings = {
+		projectId: <?php echo "'" . esc_js ( $pushpad_settings ["project_id"] ) . "'" ?>,
+		subscribeOnLoad: <?php echo ($pushpad_settings ["subscribe_on_load"] ? 'true' : 'false') ?>,
+		subscribedNotice: <?php echo "'" . esc_js( esc_html( $pushpad_settings ["subscribed_notice"] ) ) . "'" ?>,
+		notSubscribedNotice: <?php echo "'" . esc_js( esc_html( $pushpad_settings ["not_subscribed_notice"] ) ) . "'" ?>,
+		unsupportedNotice: <?php echo "'" . esc_js( esc_html( $pushpad_settings ["unsupported_notice"] ) ) . "'" ?>
+	};
 </script>
 
 <?php
 }
+
 add_action ( 'wp_head', 'pushpad_add_wp_head' );
 
 function pushpad_script() {
-	wp_enqueue_script ( 'pushpad-script', plugins_url ( '/js/pushpad-admin.js', __FILE__ ) );
+	wp_enqueue_script ( 'pushpad-admin-script', plugins_url ( '/js/pushpad-admin.js', __FILE__ ) );
 }
 add_action ( 'admin_enqueue_scripts', 'pushpad_script' );
 

@@ -54,7 +54,7 @@ class Pushpad_Widget extends WP_Widget {
 		$title = isset ( $instance ['widget-title'] ) ? $instance ['widget-title'] : 'Push Notifications';
 		$description = isset ( $instance ['widget-description'] ) ? $instance ['widget-description'] : "We'll send you a notification when we publish something new.";
 		$button_text = isset ( $instance ['widget-subscribe-button-text'] ) ? $instance ['widget-subscribe-button-text'] : 'Subscribe';
-		$unsubscribe_button_text = isset ( $instance ['widget-unsubscribe-button-text'] ) ? $instance ['widget-unsubscribe-button-text'] : 'Unsubscribe';
+		$unsubscribe_button_text = isset ( $instance ['widget-unsubscribe-button-text'] ) ? $instance ['widget-unsubscribe-button-text'] : 'Subscribed';
 ?>
 
 <p>

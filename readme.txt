@@ -2,8 +2,8 @@
 Contributors: pushpad, collimarco
 Tags: push notifications, web push notifications, web push, push api, push, notifications
 Requires at least: 4.4.0
-Tested up to: 4.9.2
-Stable tag: 1.6
+Tested up to: 5.0.0
+Stable tag: 1.7
 
 Real push notifications for your website. Uses the W3C Push API for Chrome, Firefox, Opera, Edge and supports Safari.
 
