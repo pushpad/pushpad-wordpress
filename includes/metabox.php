@@ -59,14 +59,6 @@ function pushpad_send_notification( $post_id ) {
   $notification_body = html_entity_decode ( get_the_title ( $post_id ) );
   $notification_url = get_permalink ( $post_id );
 
-  if ( strlen( $notification_title ) > 30 ) {
-  	$notification_title = substr( $notification_title, 0, 27 ) . '...';
-  }
-
-  if ( strlen( $notification_body ) > 90 ) {
-  	$notification_body = substr( $notification_body, 0, 87 ) . '...';
-  }
-
   Pushpad::$auth_token = $pushpad_settings ['token'];
   Pushpad::$project_id = $pushpad_settings ['project_id'];
 
