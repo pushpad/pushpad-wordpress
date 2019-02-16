@@ -3,7 +3,7 @@
  * Plugin Name: Pushpad - Web Push Notifications
  * Plugin URI: https://pushpad.xyz/docs/wordpress
  * Description: Real push notifications for your website. Uses the W3C Push API for Chrome, Firefox, Opera, Edge and supports Safari.
- * Version: 1.7.2
+ * Version: 1.8.0
  * Author: Pushpad
  * Author URI: https://pushpad.xyz
  * Text Domain: pushpad
@@ -31,7 +31,6 @@ function pushpad_deactivate_plugin() {
 
 function pushpad_get_settings() {
 	$default_settings = array(
-		'api' => '',
 		'token' => '',
 		'project_id' => '',
 		'subscribe_on_load' => false,
@@ -52,7 +51,7 @@ add_action ( 'admin_menu', 'pushpad_admin_pages' );
 function pushpad_add_wp_head() {
 	$pushpad_settings = pushpad_get_settings();
 
-	if ( !isset($pushpad_settings ["api"]) || $pushpad_settings ["api"] != 'custom' ) return;
+	if ( !isset($pushpad_settings ["project_id"]) ) return;
 
 	wp_register_script( 'pushpad-script', plugins_url('/js/pushpad.js', __FILE__), array('jquery'));
 	wp_enqueue_script( 'pushpad-script' );
@@ -75,11 +74,6 @@ function pushpad_add_wp_head() {
 
 add_action ( 'wp_head', 'pushpad_add_wp_head' );
 
-function pushpad_script() {
-	wp_enqueue_script ( 'pushpad-admin-script', plugins_url ( '/js/pushpad-admin.js', __FILE__ ) );
-}
-add_action ( 'admin_enqueue_scripts', 'pushpad_script' );
-
 function pushpad_style() {
 	wp_enqueue_style ( 'style', plugins_url ( '/css/style.css', __FILE__ ) );
 }
@@ -101,21 +95,3 @@ function pushpad_notices() {
   update_option ( 'pushpad_delivery_result', null );
 }
 add_action( 'admin_notices', 'pushpad_notices' );
-
-function pushpad_express_notices() {
-	if ( isset( $_GET['pushpad_status'] ) ) {
-		$pushpad_settings = pushpad_get_settings();
-		switch ( $_GET['pushpad_status'] ) {
-	    case 'subscribed':
-        echo '<div class="pushpad-notice">' . esc_html( $pushpad_settings ['subscribed_notice'] ) . ' <a href="#" onclick="javascript:this.parentNode.style.display=\'none\';" class="close">&times;</a></div>';
-        break;
-	    case 'not_subscribed':
-        echo '<div class="pushpad-alert">' . esc_html( $pushpad_settings ['not_subscribed_notice'] ) . ' <a href="#" onclick="javascript:this.parentNode.style.display=\'none\';" class="close">&times;</a></div>';
-        break;
-	    case 'unsupported':
-        echo '<div class="pushpad-alert">' . esc_html( $pushpad_settings ['unsupported_notice'] ) . ' <a href="#" onclick="javascript:this.parentNode.style.display=\'none\';" class="close">&times;</a></div>';
-        break;
-		}
-	}
-}
-add_action( 'wp_footer', 'pushpad_express_notices' );

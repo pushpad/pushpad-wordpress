@@ -12,7 +12,6 @@ function pushpad_settings() {
 	$settings = pushpad_get_settings();
 
 	if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-		$settings ['api'] = isset ( $_POST ['api'] ) ? $_POST ['api'] : '';	
 		$settings ['token'] = isset ( $_POST ['token'] ) ? $_POST ['token'] : '';
 		$settings ['project_id'] = isset ( $_POST ['project_id'] ) ? $_POST ['project_id'] : '';
 		$settings ['subscribe_on_load'] = isset ( $_POST ['subscribe_on_load'] );
@@ -27,38 +26,37 @@ function pushpad_settings() {
 
 		echo '<div class="notice notice-success is-dismissible"><p>Settings successfully updated.</p></div>';
 
-		if ($settings ['api'] == 'custom') {
-			// service-worker.js
-			$importScripts = "importScripts('https://pushpad.xyz/service-worker.js');";
+		// service-worker.js
+		$importScripts = "importScripts('https://pushpad.xyz/service-worker.js');";
 
-			if (file_exists ( ABSPATH . 'service-worker.js' )) {
-				$serviceWorkerContents = file_get_contents ( ABSPATH . 'service-worker.js' );
+		if (file_exists ( ABSPATH . 'service-worker.js' )) {
+			$serviceWorkerContents = file_get_contents ( ABSPATH . 'service-worker.js' );
+		} else {
+			$serviceWorkerContents = '';
+		}
+
+		$newServiceWorkerContents = $importScripts . "\n\n" . $serviceWorkerContents;
+
+		if ( strpos( $serviceWorkerContents, $importScripts ) === false ) {
+			if ( is_writable ( ABSPATH . 'service-worker.js' ) || !file_exists ( ABSPATH . 'service-worker.js' ) && is_writable ( ABSPATH ) ) {
+				file_put_contents( ABSPATH . 'service-worker.js', $newServiceWorkerContents );
 			} else {
-				$serviceWorkerContents = '';
-			}
-
-			$newServiceWorkerContents = $importScripts . "\n\n" . $serviceWorkerContents;
-
-			if ( strpos( $serviceWorkerContents, $importScripts ) === false ) {
-				if ( is_writable ( ABSPATH . 'service-worker.js' ) || !file_exists ( ABSPATH . 'service-worker.js' ) && is_writable ( ABSPATH ) ) {
-					file_put_contents( ABSPATH . 'service-worker.js', $newServiceWorkerContents );
-				} else {
 ?>
 
-					<p>
-						The file service-worker.js in the root directory of Wordpress is not writable.
-						Please change its permissions and try again. Otherwise replace its contents manually:
-					</p>
-					<pre class="pushpad"><code><?= esc_html ( $newServiceWorkerContents ) ?></code></pre>
-					<p>
-						Also make sure that the file is accessible at https://example.com/service-worker.js
-						(for example https://example.com/wordpress/service-worker.js is invalid).
-					</p>
+				<p>
+					The file service-worker.js in the root directory of Wordpress is not writable.
+					Please change its permissions and try again. Otherwise replace its contents manually:
+				</p>
+				<pre class="pushpad"><code><?= esc_html ( $newServiceWorkerContents ) ?></code></pre>
+				<p>
+					Also make sure that the file is accessible at https://example.com/service-worker.js
+					(for example https://example.com/wordpress/service-worker.js is invalid).
+				</p>
 
 <?php
-				}
 			}
 		}
+		
 	}
 ?>
 
@@ -66,18 +64,6 @@ function pushpad_settings() {
 
 		<table class="form-table">
 			<tbody>
-				<tr>
-					<th>Which product are you using?</th>
-					<td>
-						<label> 
-							<input type="radio" name="api" value="custom" <?php if ($settings['api'] == "custom" ) echo "checked"; ?>> Pushpad
-						</label>
-						<br>
-						<label> 
-							<input type="radio" name="api" value="simple" <?php if ($settings['api'] == "simple" ) echo "checked"; ?>> Express (deprecated)
-						</label>
-					</td>
-				</tr>
 				<tr>
 					<th><label for="token">Pushpad Auth Token</label></th>
 					<td>
@@ -92,7 +78,7 @@ function pushpad_settings() {
 						<p class="description">You can find it in the project settings on Pushpad.</p>
 					</td>
 				</tr>
-				<tr class="custom-api-only">
+				<tr>
 					<th>Subscription</th>
 					<td>
 						<input type="checkbox" name="subscribe_on_load" id="subscribe_on_load" <?php if ( $settings['subscribe_on_load'] ) echo "checked"; ?>>
@@ -103,7 +89,7 @@ function pushpad_settings() {
 					<th><label>Style</label></th>
 					<td>
 						<p class="description">
-							You can style the Pushpad button by adding your CSS rules for <code>.pushpad-button</code><span class="custom-api-only"> and <code>.pushpad-button.subscribed</code></span>.<br>
+							You can style the Pushpad button by adding your CSS rules for <code>.pushpad-button</code> and <code>.pushpad-button.subscribed</code>.<br>
 							You can style the Pushpad notices by adding your CSS rules for <code>.pushpad-notice</code> and <code>.pushpad-alert</code></span>.<br>
 							Go to <i>Appearance -> Customize -> Additional CSS</i>.
 						</p>
