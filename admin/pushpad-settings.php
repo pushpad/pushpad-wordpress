@@ -8,19 +8,14 @@ function pushpad_settings() {
 <div class="wrap">
 	<h1>Pushpad Settings</h1>
 
+	<p><a href="https://pushpad.xyz/docs/wordpress" target="_blank">Documentation</a></p>
+
 <?php
 	$settings = pushpad_get_settings();
 
 	if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 		$settings ['token'] = isset ( $_POST ['token'] ) ? $_POST ['token'] : '';
 		$settings ['project_id'] = isset ( $_POST ['project_id'] ) ? $_POST ['project_id'] : '';
-		$settings ['subscribe_on_load'] = isset ( $_POST ['subscribe_on_load'] );
-		if ( !empty ( $_POST ['subscribed_notice'] ) )
-			$settings ['subscribed_notice'] = $_POST ['subscribed_notice'];
-		if ( !empty ( $_POST ['not_subscribed_notice'] ) )
-			$settings ['not_subscribed_notice'] = $_POST ['not_subscribed_notice'];
-		if ( !empty ( $_POST ['unsupported_notice'] ) )
-			$settings ['unsupported_notice'] = $_POST ['unsupported_notice'];
 		
 		update_option ( 'pushpad_settings', $settings );
 
@@ -65,47 +60,17 @@ function pushpad_settings() {
 		<table class="form-table">
 			<tbody>
 				<tr>
-					<th><label for="token">Pushpad Auth Token</label></th>
+					<th><label for="token">Auth Token</label></th>
 					<td>
 						<input type="text" name="token" id="token" value="<?php echo esc_attr ( $settings['token'] ) ?>">
-						<p class="description">You can generate it in your <a href="https://pushpad.xyz/users/edit">account settings</a>.</p>
+						<p class="description">You can generate it in your <a href="https://pushpad.xyz/access_tokens">account settings</a>.</p>
 					</td>
 				</tr>
 				<tr>
-					<th><label for="project_id">Pushpad Project ID</label></th>
+					<th><label for="project_id">Project ID</label></th>
 					<td>
 						<input type="text" name="project_id" id="project_id" value="<?php echo esc_attr ( $settings['project_id'] ) ?>">
 						<p class="description">You can find it in the project settings on Pushpad.</p>
-					</td>
-				</tr>
-				<tr>
-					<th>Subscription</th>
-					<td>
-						<input type="checkbox" name="subscribe_on_load" id="subscribe_on_load" <?php if ( $settings['subscribe_on_load'] ) echo "checked"; ?>>
-						<label for="subscribe_on_load">Prompt users on page load</label>
-					</td>
-				</tr>
-				<tr>
-					<th><label>Style</label></th>
-					<td>
-						<p class="description">
-							You can style the Pushpad button by adding your CSS rules for <code>.pushpad-button</code> and <code>.pushpad-button.subscribed</code>.<br>
-							You can style the Pushpad notices by adding your CSS rules for <code>.pushpad-notice</code> and <code>.pushpad-alert</code></span>.<br>
-							Go to <i>Appearance -> Customize -> Additional CSS</i>.
-						</p>
-					</td>
-				</tr>
-				<tr>
-					<th><label for="token">Custom text</label></th>
-					<td>
-						<input type="text" class="regular-text" name="subscribed_notice" id="subscribed_notice" value="<?php echo esc_attr ( $settings['subscribed_notice'] ) ?>" required>
-						<p class="description">A notice that is displayed when a user successfully subscribes to push notifications.</p>
-						<br>
-						<input type="text" class="regular-text" name="not_subscribed_notice" id="not_subscribed_notice" value="<?php echo esc_attr ( $settings['not_subscribed_notice'] ) ?>" required>
-						<p class="description">A notice that is displayed when subscription to push notifications fails because the user blocks them from browser settings.</p>
-						<br>
-						<input type="text" class="regular-text" name="unsupported_notice" id="unsupported_notice" value="<?php echo esc_attr ( $settings['unsupported_notice'] ) ?>" required>
-						<p class="description">A notice that is displayed when the browser does not support push notifications.</p>
 					</td>
 				</tr>
 			</tbody>

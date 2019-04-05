@@ -59,10 +59,10 @@ function pushpad_send_notification( $post_id ) {
   $notification_body = html_entity_decode ( get_the_title ( $post_id ) );
   $notification_url = get_permalink ( $post_id );
 
-  Pushpad::$auth_token = $pushpad_settings ['token'];
-  Pushpad::$project_id = $pushpad_settings ['project_id'];
+  Pushpad\Pushpad::$auth_token = $pushpad_settings ['token'];
+  Pushpad\Pushpad::$project_id = $pushpad_settings ['project_id'];
 
-  $notification = new Notification ( array (
+  $notification = new Pushpad\Notification ( array (
   	'body' => $notification_body,
   	'title' => $notification_title,
   	'target_url' => $notification_url

@@ -2,15 +2,13 @@
 /*
  * Plugin Name: Pushpad - Web Push Notifications
  * Plugin URI: https://pushpad.xyz/docs/wordpress
- * Description: Real push notifications for your website. Uses the W3C Push API for Chrome, Firefox, Opera, Edge and supports Safari.
- * Version: 1.8.0
+ * Description: Pushpad is the easiest way to add push notifications to your website.
+ * Version: 2.0.0
  * Author: Pushpad
  * Author URI: https://pushpad.xyz
  * Text Domain: pushpad
  */
 
-register_deactivation_hook( __FILE__, 'pushpad_deactivate_plugin' );
-include plugin_dir_path( __FILE__ ) . '/admin/pushpad-admin.php';
 include plugin_dir_path( __FILE__ ) . '/admin/pushpad-settings.php';
 include plugin_dir_path( __FILE__ ) . '/includes/widget.php';
 include plugin_dir_path( __FILE__ ) . '/includes/shortcode.php';
@@ -18,67 +16,34 @@ include plugin_dir_path( __FILE__ ) . '/includes/metabox.php';
 require_once plugin_dir_path( __FILE__ ) . '/pushpad/pushpad.php';
 require_once plugin_dir_path( __FILE__ ) . '/pushpad/notification.php';
 
-function pushpad_activate_plugin( $plugin ) {
-	if( $plugin == plugin_basename( __FILE__ ) ) {
-		exit ( wp_redirect ( admin_url ( 'admin.php?page=pushpad-admin' ) ) );
-	}
-}
-add_action ( 'activated_plugin', 'pushpad_activate_plugin' );
-
-function pushpad_deactivate_plugin() {
-	
-}
-
 function pushpad_get_settings() {
 	$default_settings = array(
 		'token' => '',
-		'project_id' => '',
-		'subscribe_on_load' => false,
-		'subscribed_notice' => 'You have successfully subscribed to push notifications. You can change your preferences at any time from browser settings.',
-		'not_subscribed_notice' => 'You have blocked push notifications from browser preferences. Please change your browser settings and try again.',
-		'unsupported_notice' => 'Sorry, your browser does not support web push notifications.'
+		'project_id' => ''
 	);
 	$settings = get_option ( 'pushpad_settings', array() );
 	return wp_parse_args( $settings, $default_settings );
 }
 
 function pushpad_admin_pages() {
-	add_menu_page ( 'Pushpad', 'Pushpad', 'manage_options', 'pushpad-admin', 'pushpad_admin' );
-	add_submenu_page ( 'pushpad-admin', 'Settings', 'Settings', 'manage_options', 'pushpad-settings', 'pushpad_settings' );
+	add_menu_page ( 'Pushpad', 'Pushpad', 'manage_options', 'pushpad-settings', 'pushpad_settings' );
 }
 add_action ( 'admin_menu', 'pushpad_admin_pages' );
 
 function pushpad_add_wp_head() {
 	$pushpad_settings = pushpad_get_settings();
-
 	if ( !isset($pushpad_settings ["project_id"]) ) return;
-
-	wp_register_script( 'pushpad-script', plugins_url('/js/pushpad.js', __FILE__), array('jquery'));
-	wp_enqueue_script( 'pushpad-script' );
 ?>
 
 <script>
 	(function(p,u,s,h,x){p.pushpad=p.pushpad||function(){(p.pushpad.q=p.pushpad.q||[]).push(arguments)};h=u.getElementsByTagName('head')[0];x=u.createElement('script');x.async=1;x.src=s;h.appendChild(x);})(window,document,'https://pushpad.xyz/pushpad.js');
-
-	var pushpadSettings = {
-		projectId: <?php echo "'" . esc_js ( $pushpad_settings ["project_id"] ) . "'" ?>,
-		subscribeOnLoad: <?php echo ($pushpad_settings ["subscribe_on_load"] ? 'true' : 'false') ?>,
-		subscribedNotice: <?php echo "'" . esc_js( esc_html( $pushpad_settings ["subscribed_notice"] ) ) . "'" ?>,
-		notSubscribedNotice: <?php echo "'" . esc_js( esc_html( $pushpad_settings ["not_subscribed_notice"] ) ) . "'" ?>,
-		unsupportedNotice: <?php echo "'" . esc_js( esc_html( $pushpad_settings ["unsupported_notice"] ) ) . "'" ?>
-	};
+	pushpad('init', <?php echo "'" . esc_js ( $pushpad_settings ["project_id"] ) . "'" ?>);
+	pushpad('widget');
 </script>
 
 <?php
 }
-
 add_action ( 'wp_head', 'pushpad_add_wp_head' );
-
-function pushpad_style() {
-	wp_enqueue_style ( 'style', plugins_url ( '/css/style.css', __FILE__ ) );
-}
-add_action ( 'wp_enqueue_scripts', 'pushpad_style' );
-add_action ( 'admin_enqueue_scripts', 'pushpad_style' );
 
 function pushpad_notices() {
 	$delivery_result = get_option ( 'pushpad_delivery_result', null );
