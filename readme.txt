@@ -2,7 +2,7 @@
 Contributors: pushpad, collimarco
 Tags: web push notifications, web push, push notifications, push, notifications, push api
 Requires at least: 5.0
-Tested up to: 5.7
+Tested up to: 5.8
 Stable tag: 2.0
 
 Pushpad is the easiest way to add push notifications to your website.
