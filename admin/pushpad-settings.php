@@ -60,24 +60,24 @@ function pushpad_settings() {
 		<table class="form-table">
 			<tbody>
 				<tr>
-					<th><label for="token">Auth Token</label></th>
-					<td>
-						<input type="text" name="token" id="token" value="<?php echo esc_attr ( $settings['token'] ) ?>">
-						<p class="description">You can generate it in your <a href="https://pushpad.xyz/access_tokens">account settings</a>.</p>
-					</td>
-				</tr>
-				<tr>
 					<th><label for="project_id">Project ID</label></th>
 					<td>
 						<input type="text" name="project_id" id="project_id" value="<?php echo esc_attr ( $settings['project_id'] ) ?>">
 						<p class="description">You can find it in the project settings on Pushpad.</p>
 					</td>
 				</tr>
+				<tr>
+					<th><label for="token">Auth Token</label></th>
+					<td>
+						<input type="text" name="token" id="token" value="<?php echo esc_attr ( $settings['token'] ) ?>">
+						<p class="description">You can generate an access token in your account settings on Pushpad.</p>
+					</td>
+				</tr>
 			</tbody>
 		</table>
 
 		<p class="submit">
-			<input type="submit" value="Save" class="button button-primary" id="submit" name="submit">
+			<input type="submit" value="Save Changes" class="button button-primary" id="submit" name="submit">
 		</p>
 	</form>
 </div>

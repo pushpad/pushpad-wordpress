@@ -3,7 +3,7 @@
  * Plugin Name: Pushpad - Web Push Notifications
  * Plugin URI: https://pushpad.xyz/docs/wordpress
  * Description: Pushpad is the easiest way to add push notifications to your website.
- * Version: 2.0.0
+ * Version: 2.0.1
  * Author: Pushpad
  * Author URI: https://pushpad.xyz
  * Text Domain: pushpad
