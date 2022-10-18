@@ -49,6 +49,8 @@ function pushpad_send_notification( $post_id ) {
 
   if ( ! $should_send )
   	return;
+		
+	delete_post_meta( $post_id, 'pushpad_send_notification' );
 
   $pushpad_settings = get_option ( 'pushpad_settings' );
 
@@ -71,7 +73,6 @@ function pushpad_send_notification( $post_id ) {
   try {
   	$notification->broadcast ();
   	update_option ( 'pushpad_delivery_result', array( 'status' => 'ok' ) );
-    delete_post_meta( $post_id, 'pushpad_send_notification' );
   } catch (Exception $e) {
   	update_option ( 'pushpad_delivery_result', array( 'status' => 'error', 'message' => $e->getMessage() ) );
   }
