@@ -60,6 +60,7 @@ function pushpad_send_notification( $post_id ) {
   $notification_title = html_entity_decode ( get_bloginfo ( 'name' ) );
   $notification_body = html_entity_decode ( get_the_title ( $post_id ) );
   $notification_url = get_permalink ( $post_id );
+	$notification_image = get_the_post_thumbnail_url ( $post_id, 'medium_large' );
 
   Pushpad\Pushpad::$auth_token = $pushpad_settings ['token'];
   Pushpad\Pushpad::$project_id = $pushpad_settings ['project_id'];
@@ -67,7 +68,8 @@ function pushpad_send_notification( $post_id ) {
   $notification = new Pushpad\Notification ( array (
   	'body' => $notification_body,
   	'title' => $notification_title,
-  	'target_url' => $notification_url
+  	'target_url' => $notification_url,
+		'image_url' => $notification_image ? $notification_image : null
   ) );
 
   try {
