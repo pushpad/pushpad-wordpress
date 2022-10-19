@@ -1,6 +1,6 @@
 <?php
-function pushpad_shortcode($atts) {
+function pushpad_shortcode( $atts ) {
 	return '<div id="pushpad-subscribe"></div>';
 }
 
-add_shortcode ( 'pushpad-button', 'pushpad_shortcode' );
+add_shortcode( 'pushpad-button', 'pushpad_shortcode' );
