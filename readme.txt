@@ -9,7 +9,7 @@ Pushpad is the easiest way to add push notifications to your website.
 
 == Description ==
 
-[Pushpad](https://pushpad.xyz) is the easiest way to add push notifications to your website. The plugin uses the W3C Push API for Chrome, Firefox, Opera, Edge and other browsers and supports Safari desktop.
+[Pushpad](https://pushpad.xyz) is the easiest way to add push notifications to your website. The plugin uses the W3C Push API, which is a standard for push notifications supported by all major browsers (Chrome, Firefox, Opera, Edge, Safari).
 
 Push notifications re-engage your users by notifying them when you publish something new. They receive your notifications even when they are not surfing your website and they don't need to install any app or plugin.
 
@@ -24,6 +24,4 @@ This plugin includes the Pushpad widget and allows you to collect subscribers in
 - **bell**: a floating action button that allows users to subscribe to notifications
 - **button**: a customizable button that can be placed anywhere on your website to allow users to subscribe or unsubscribe from notifications
 
-You can [learn more in the docs](https://pushpad.xyz/docs/wordpress).
-
-The plugin is also [available on Github](https://github.com/pushpad/pushpad-wordpress).
+[Documentation](https://pushpad.xyz/docs/wordpress) | [GitHub](https://github.com/pushpad/pushpad-wordpress)
